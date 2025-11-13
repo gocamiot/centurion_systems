@@ -68,6 +68,7 @@ INSTALLED_APPS = [
 
     'drf_spectacular',
     'django_api_gen',
+    'sso_client',
     'import_export',
 
     # "debug_toolbar",
@@ -240,6 +241,8 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     # `allauth` specific authentication methods, such as login by email
     'allauth.account.auth_backends.AuthenticationBackend',
+    # SSO Backend
+    'sso_client.backends.OAuth2Backend',
 ]
 
 # allauth config
@@ -447,3 +450,10 @@ MAP_FIELD_NAMES = {
     'itgc_categories': 'risk',
     'itgc_questions': 'control'
 }
+
+# SSO
+
+SSO_CLIENT_URL = os.getenv('SSO_CLIENT_URL')
+SSO_PROVIDER_URL = os.getenv('SSO_PROVIDER_URL')
+SSO_CLIENT_ID = os.getenv('SSO_CLIENT_ID')
+SSO_CLIENT_SECRET = os.getenv('SSO_CLIENT_SECRET')
