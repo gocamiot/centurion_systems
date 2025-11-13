@@ -1,0 +1,177 @@
+# version: '3.7'
+
+# services:
+#   app:
+#     image: bdo_centurion
+#     build:
+#       context: .
+#       args:
+#         GITHUB_USERNAME: ${GITHUB_USERNAME}
+#         GITHUB_TOKEN: ${GITHUB_TOKEN}
+#     volumes:
+#       - ./staticfiles:/app/staticfiles  # bind mount to host directory
+#       - ./media:/app/media              # bind mount to host directory
+#       - ./apps:/app/apps                # bind mount to host directory
+#       - ./core:/app/core                # bind mount to host directory
+#       - ./templates:/app/templates      # bind mount to host directory
+#     expose:
+#       - "8000"
+#     env_file:
+#       - ./.env
+#     depends_on:
+#       - db
+#     networks:
+#       - internal_network
+
+#   nginx:
+#     build:
+#       context: ./nginx
+#     ports:
+#       - "80:80"
+#       - "443:443"
+#     env_file:
+#       - ./.env
+#     volumes:
+#       - ./staticfiles:/app/staticfiles  # bind mount to host directory
+#       - ./media:/app/media
+#       - /etc/letsencrypt:/etc/letsencrypt:ro
+#     depends_on:
+#       - app
+#       - db
+#     networks:
+#       - internal_network
+
+#   rabbitmq:
+#     image: "rabbitmq:3-management"
+#     container_name: "rabbitmq-bdo"
+#     networks:
+#       - internal_network
+
+#   celery_worker:
+#     image: bdo_centurion
+#     build:
+#       context: .
+#       args:
+#         GITHUB_USERNAME: ${GITHUB_USERNAME}
+#         GITHUB_TOKEN: ${GITHUB_TOKEN}
+#     env_file:
+#       - ./.env
+#     command: 'python manage.py celery_worker'
+#     volumes:
+#       - ./apps:/app/apps                # bind mount to host directory
+#       - ./core:/app/core                # bind mount to host directory
+#       - ./templates:/app/templates      # bind mount to host directory
+#       - ./staticfiles:/app/staticfiles  # bind mount to host directory
+#       - ./media:/app/media              # bind mount to host directory
+#     depends_on:
+#       - app
+#       - rabbitmq
+#       - db
+#     networks:
+#       - internal_network
+
+#   db:
+#     image: postgres
+#     volumes:
+#       - database:/var/lib/postgresql/data/
+#     environment:
+#       - POSTGRES_DB=${DB_NAME}
+#       - POSTGRES_USER=${DB_USERNAME}
+#       - POSTGRES_PASSWORD=${DB_PASS}
+#     networks:
+#       - internal_network
+
+# volumes:
+#   database:
+
+# networks:
+#   internal_network:
+#     driver: bridge
+
+version: '3.7'
+
+services:
+  app:
+    image: bdo_centurion
+    build:
+      context: .
+      args:
+        GITHUB_USERNAME: ${GITHUB_USERNAME}
+        GITHUB_TOKEN: ${GITHUB_TOKEN}
+    volumes:
+      - ./staticfiles:/app/staticfiles  # bind mount to host directory
+      - ./media:/app/media              # bind mount to host directory
+      - ./apps:/app/apps                # bind mount to host directory
+      - ./core:/app/core                # bind mount to host directory
+      - ./templates:/app/templates      # bind mount to host directory
+    env_file:
+      - ./.env
+    depends_on:
+      - db
+    networks:
+      - internal_network
+
+  nginx:
+    build:
+      context: ./nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    env_file:
+      - ./.env
+    volumes:
+      - ./staticfiles:/app/staticfiles  # bind mount to host directory
+      - ./media:/app/media              # bind mount to host directory
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+    depends_on:
+      - app
+      - db
+    networks:
+      - internal_network
+
+  rabbitmq:
+    image: "rabbitmq:3-management"
+    container_name: "rabbitmq-centurion"
+    networks:
+      - internal_network
+
+  celery_worker:
+    image: bdo_centurion
+    build:
+      context: .
+      args:
+        GITHUB_USERNAME: ${GITHUB_USERNAME}
+        GITHUB_TOKEN: ${GITHUB_TOKEN}
+    env_file:
+      - ./.env
+    command: 'python manage.py celery_worker'
+    volumes:
+      - ./apps:/app/apps                # bind mount to host directory
+      - ./core:/app/core                # bind mount to host directory
+      - ./templates:/app/templates      # bind mount to host directory
+      - ./staticfiles:/app/staticfiles  # bind mount to host directory
+      - ./media:/app/media              # bind mount to host directory
+    depends_on:
+      - app
+      - rabbitmq
+      - db
+    networks:
+      - internal_network
+
+  db:
+    image: postgres
+    volumes:
+      - database:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USERNAME}
+      - POSTGRES_PASSWORD=${DB_PASS}
+    networks:
+      - internal_network
+
+volumes:
+  database:
+
+networks:
+  internal_network:
+    driver: bridge
