@@ -8,7 +8,7 @@ npm run build
 
 #Initial setup install - One liners
 #py -m venv venv && cd venv\Scripts && activate && cd .. && cd .. && cd bdo_centurion
-#python -m pip install --upgrade pip & pip install -r requirements.txt & pip install git+https://github.com/gocamiot/loader.git & pip install git+https://github.com/gocamiot/comms.git && python manage.py collectstatic --no-input && python manage.py makemigrations && python manage.py migrate && py manage.py runserver
+#python -m pip install --upgrade pip & pip install -r requirements.txt & pip install git+https://github.com/gocamiot/loader.git & pip install git+https://github.com/gocamiot/comms.git && pip install git+https://github.com/gocamiot/sso_client.git && python manage.py collectstatic --no-input && python manage.py makemigrations && python manage.py migrate && py manage.py runserver
 
 #After Initial Setup of GRC - One liners
 #cd venv\Scripts && activate && cd .. && cd .. && cd bdo_centurion
