@@ -17,4 +17,4 @@ python manage.py migrate
 
 # Start server
 echo "Starting server"
-exec gunicorn --reload core.wsgi:application --bind 0.0.0.0:8000 --workers 3 --timeout 1200
+exec gunicorn --reload core.wsgi:application --bind 0.0.0.0:8000 --workers 3 --timeout 999999
