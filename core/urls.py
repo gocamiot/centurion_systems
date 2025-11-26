@@ -63,6 +63,22 @@ urlpatterns = [
     path('tables/', include('apps.tables.images.images_urls')),
 
     path('tables/', include('apps.tables.unique_details.unique_details_urls')),
+
+    path('tables/', include('apps.tables.hr_staff_list.hr_staff_list_urls')),
+
+    path('tables/', include('apps.tables.hr_staff_list_terminations.hr_staff_list_terminations_urls')),
+
+    path('tables/', include('apps.tables.application_user_list.application_user_list_urls')),
+
+    path('tables/', include('apps.tables.hr_staff_list_vs_application_user_list.hr_staff_list_vs_application_user_list_urls')),
+
+    path('tables/', include('apps.tables.hr_staff_list_terminations_vs_application_user_list.hr_staff_list_terminations_vs_application_user_list_urls')),
+
+    path('tables/', include('apps.tables.privileged_users.privileged_users_urls')),
+
+    path('tables/', include('apps.tables.analysis_of_security_audits_user_logs.analysis_of_security_audits_user_logs_urls')),
+
+    path('tables/', include('apps.tables.privileged_users_vs_user_logs.privileged_users_vs_user_logs_urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL      , document_root=settings.MEDIA_ROOT     )

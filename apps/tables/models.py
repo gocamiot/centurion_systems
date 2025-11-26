@@ -25,6 +25,14 @@ User = get_user_model()
 
 
 class ModelChoices(models.TextChoices): 
+    PRIVILEGEDUSERS_VS_USER_LOGS = 'PRIVILEGEDUSERS_VS_USER_LOGS', 'PrivilegedusersVsUserLogs'
+    ANALYSISOF_SECURITY_AUDITS_USER_LOGS = 'ANALYSISOF_SECURITY_AUDITS_USER_LOGS', 'AnalysisofSecurityAuditsUserLogs'
+    PRIVILEGEDUSERS = 'PRIVILEGEDUSERS', 'Privilegedusers'
+    HR_STAFF_LIST_TERMINATIONS_VS_APPLICATION_USER_LIST = 'HR_STAFF_LIST_TERMINATIONS_VS_APPLICATION_USER_LIST', 'HRStaffListTerminationsVSApplicationUserList'
+    HR_STAFF_LIST_VS_APPLICATION_USER_LIST = 'HR_STAFF_LIST_VS_APPLICATION_USER_LIST', 'HRStaffListVSApplicationUserList'
+    APPLICATION_USER_LIST = 'APPLICATION_USER_LIST', 'ApplicationUserList'
+    HR_STAFF_LIST_TERMINATIONS = 'HR_STAFF_LIST_TERMINATIONS', 'HRStaffListTerminations'
+    HR_STAFF_LIST = 'HR_STAFF_LIST', 'HRStaffList'
     FAVORITE = 'FAVORITE', _('Favorite')
     UNIQUE = 'UNIQUE', _('Unique')
     FINDING = 'FINDING', _('Finding')
@@ -894,3 +902,240 @@ class SelectedRows(models.Model):
     tab_id = models.TextField(null=True, blank=True)
 
 
+
+
+class HRStaffList(models.Model):
+    ID = models.AutoField(primary_key=True)
+    PersNo = models.TextField(null=True, blank=True, verbose_name='PersNo', db_column='PersNo')
+    Personnel_Area = models.TextField(null=True, blank=True, verbose_name='Personnel_Area', db_column='Personnel_Area')
+    Employee_Group = models.TextField(null=True, blank=True, verbose_name='Employee_Group', db_column='Employee_Group')
+    Personnel_Subarea = models.TextField(null=True, blank=True, verbose_name='Personnel_Subarea', db_column='Personnel_Subarea')
+    Organizational_Unit = models.TextField(null=True, blank=True, verbose_name='Organizational_Unit', db_column='Organizational_Unit')
+    Initials = models.TextField(null=True, blank=True, verbose_name='Initials', db_column='Initials')
+    Last_name = models.TextField(null=True, blank=True, verbose_name='Last_name', db_column='Last_name')
+    First_name = models.TextField(null=True, blank=True, verbose_name='First_name', db_column='First_name')
+    Position = models.TextField(null=True, blank=True, verbose_name='Position', db_column='Position')
+    Start_date = models.BigIntegerField(null=True, blank=True, verbose_name='Start_date', db_column='Start_date')
+    Birth_date = models.BigIntegerField(null=True, blank=True, verbose_name='Birth_date', db_column='Birth_date')
+    loader_instance = models.IntegerField(null=True, blank=True)
+    json_data = models.JSONField(null=True, blank=True)
+    hash_data = models.TextField(null=True, blank=True)
+
+    date_fields_to_convert = ['Start_date', 'Birth_date']
+    integer_fields = []
+    float_fields = []
+    encrypted_fields = []
+    unix_dates = []
+    ad_unix_dates = []
+
+
+class HRStaffListTerminations(models.Model):
+    ID = models.AutoField(primary_key=True)
+    PersNo = models.TextField(null=True, blank=True, verbose_name='PersNo', db_column='PersNo')
+    Personnel_Area = models.TextField(null=True, blank=True, verbose_name='Personnel_Area', db_column='Personnel_Area')
+    Employee_Group = models.TextField(null=True, blank=True, verbose_name='Employee_Group', db_column='Employee_Group')
+    Personnel_Subarea = models.TextField(null=True, blank=True, verbose_name='Personnel_Subarea', db_column='Personnel_Subarea')
+    Organizational_Unit = models.TextField(null=True, blank=True, verbose_name='Organizational_Unit', db_column='Organizational_Unit')
+    Initials = models.TextField(null=True, blank=True, verbose_name='Initials', db_column='Initials')
+    Last_name = models.TextField(null=True, blank=True, verbose_name='Last_name', db_column='Last_name')
+    First_name = models.TextField(null=True, blank=True, verbose_name='First_name', db_column='First_name')
+    Position = models.TextField(null=True, blank=True, verbose_name='Position', db_column='Position')
+    Entry_date = models.BigIntegerField(null=True, blank=True, verbose_name='Entry_date', db_column='Entry_date')
+    Termination_date = models.BigIntegerField(null=True, blank=True, verbose_name='Termination_date', db_column='Termination_date')
+    loader_instance = models.IntegerField(null=True, blank=True)
+    json_data = models.JSONField(null=True, blank=True)
+    hash_data = models.TextField(null=True, blank=True)
+
+    date_fields_to_convert = ['Entry_date', 'Termination_date']
+    integer_fields = []
+    float_fields = []
+    encrypted_fields = []
+    unix_dates = []
+    ad_unix_dates = []
+
+
+class ApplicationUserList(models.Model):
+    ID = models.AutoField(primary_key=True)
+    Full_Name = models.TextField(null=True, blank=True, verbose_name='Full_Name', db_column='Full_Name')
+    User_Name = models.TextField(null=True, blank=True, verbose_name='User_Name', db_column='User_Name')
+    User_group = models.TextField(null=True, blank=True, verbose_name='User_group', db_column='User_group')
+    Valid_From = models.BigIntegerField(null=True, blank=True, verbose_name='Valid_From', db_column='Valid_From')
+    Valid_To = models.BigIntegerField(null=True, blank=True, verbose_name='Valid_To', db_column='Valid_To')
+    User_Type = models.TextField(null=True, blank=True, verbose_name='User_Type', db_column='User_Type')
+    Department = models.TextField(null=True, blank=True, verbose_name='Department', db_column='Department')
+    loader_instance = models.IntegerField(null=True, blank=True)
+    json_data = models.JSONField(null=True, blank=True)
+    hash_data = models.TextField(null=True, blank=True)
+
+    date_fields_to_convert = ['Valid_From', 'Valid_To']
+    integer_fields = []
+    float_fields = []
+    encrypted_fields = []
+    unix_dates = []
+    ad_unix_dates = []
+
+
+class HRStaffListVSApplicationUserList(models.Model):
+    ID = models.AutoField(primary_key=True)
+    PersNo = models.TextField(null=True, blank=True)
+    Personnel_Area = models.TextField(null=True, blank=True)
+    Employee_Group = models.TextField(null=True, blank=True)
+    Personnel_Subarea = models.TextField(null=True, blank=True)
+    Organizational_Unit = models.TextField(null=True, blank=True)
+    Initials = models.TextField(null=True, blank=True)
+    Last_name = models.TextField(null=True, blank=True)
+    First_name = models.TextField(null=True, blank=True)
+    Position = models.TextField(null=True, blank=True)
+    Start_date = models.BigIntegerField(null=True, blank=True)
+    Birth_date = models.BigIntegerField(null=True, blank=True)
+    d_Full_Name = models.TextField(null=True, blank=True)
+    d_User_Name = models.TextField(null=True, blank=True)
+    d_User_group = models.TextField(null=True, blank=True)
+    d_Valid_From = models.BigIntegerField(null=True, blank=True)
+    d_Valid_To = models.BigIntegerField(null=True, blank=True)
+    d_User_Type = models.TextField(null=True, blank=True)
+    d_Department = models.TextField(null=True, blank=True)
+
+    both = models.IntegerField(null=True, blank=True)
+    base = models.IntegerField(null=True, blank=True)
+    delta = models.IntegerField(null=True, blank=True)
+
+    loader_instance = models.IntegerField(null=True, blank=True)
+    json_data = models.JSONField(null=True, blank=True)
+    hash_data = models.TextField(null=True, blank=True)
+
+    join_model_instance = 1  # Do not change this value
+    date_fields_to_convert = ['Start_date', 'Birth_date', 'd_Valid_From', 'd_Valid_To']
+    integer_fields = []
+    float_fields = []
+    encrypted_fields = []
+    unix_dates = []
+    ad_unix_dates = []
+
+
+class HRStaffListTerminationsVSApplicationUserList(models.Model):
+    ID = models.AutoField(primary_key=True)
+    PersNo = models.TextField(null=True, blank=True)
+    Personnel_Area = models.TextField(null=True, blank=True)
+    Employee_Group = models.TextField(null=True, blank=True)
+    Personnel_Subarea = models.TextField(null=True, blank=True)
+    Organizational_Unit = models.TextField(null=True, blank=True)
+    Initials = models.TextField(null=True, blank=True)
+    Last_name = models.TextField(null=True, blank=True)
+    First_name = models.TextField(null=True, blank=True)
+    Position = models.TextField(null=True, blank=True)
+    Entry_date = models.BigIntegerField(null=True, blank=True)
+    Termination_date = models.BigIntegerField(null=True, blank=True)
+    d_Full_Name = models.TextField(null=True, blank=True)
+    d_User_Name = models.TextField(null=True, blank=True)
+    d_User_group = models.TextField(null=True, blank=True)
+    d_Valid_From = models.BigIntegerField(null=True, blank=True)
+    d_Valid_To = models.BigIntegerField(null=True, blank=True)
+    d_User_Type = models.TextField(null=True, blank=True)
+    d_Department = models.TextField(null=True, blank=True)
+
+    both = models.IntegerField(null=True, blank=True)
+    base = models.IntegerField(null=True, blank=True)
+    delta = models.IntegerField(null=True, blank=True)
+
+    loader_instance = models.IntegerField(null=True, blank=True)
+    json_data = models.JSONField(null=True, blank=True)
+    hash_data = models.TextField(null=True, blank=True)
+
+    join_model_instance = 2  # Do not change this value
+    date_fields_to_convert = ['d_Valid_To', 'Termination_date', 'd_Valid_From', 'Entry_date']
+    integer_fields = []
+    float_fields = []
+    encrypted_fields = []
+    unix_dates = []
+    ad_unix_dates = []
+
+
+class Privilegedusers(models.Model):
+    ID = models.AutoField(primary_key=True)
+    User_Name = models.TextField(null=True, blank=True, verbose_name='User_Name', db_column='User_Name')
+    Full_Name = models.TextField(null=True, blank=True, verbose_name='Full_Name', db_column='Full_Name')
+    User_group = models.TextField(null=True, blank=True, verbose_name='User_group', db_column='User_group')
+    Locked = models.TextField(null=True, blank=True, verbose_name='Locked', db_column='Locked')
+    Reason_for_User_Lock = models.TextField(null=True, blank=True, verbose_name='Reason_for_User_Lock', db_column='Reason_for_User_Lock')
+    Valid_From = models.BigIntegerField(null=True, blank=True, verbose_name='Valid_From', db_column='Valid_From')
+    Valid_To = models.BigIntegerField(null=True, blank=True, verbose_name='Valid_To', db_column='Valid_To')
+    User_Type = models.TextField(null=True, blank=True, verbose_name='User_Type', db_column='User_Type')
+    Department = models.TextField(null=True, blank=True, verbose_name='Department', db_column='Department')
+    loader_instance = models.IntegerField(null=True, blank=True)
+    json_data = models.JSONField(null=True, blank=True)
+    hash_data = models.TextField(null=True, blank=True)
+
+    date_fields_to_convert = ['Valid_From', 'Valid_To']
+    integer_fields = []
+    float_fields = []
+    encrypted_fields = []
+    unix_dates = []
+    ad_unix_dates = []
+
+
+class AnalysisofSecurityAuditsUserLogs(models.Model):
+    ID = models.AutoField(primary_key=True)
+    Creation_Date = models.BigIntegerField(null=True, blank=True, verbose_name='Creation_Date', db_column='Creation_Date')
+    Creation_time_of_audit_entry = models.TextField(null=True, blank=True, verbose_name='Creation_time_of_audit_entry', db_column='Creation_time_of_audit_entry')
+    Client = models.TextField(null=True, blank=True, verbose_name='Client', db_column='Client')
+    User_Name = models.TextField(null=True, blank=True, verbose_name='User_Name', db_column='User_Name')
+    Terminal_name = models.TextField(null=True, blank=True, verbose_name='Terminal_name', db_column='Terminal_name')
+    Transaction_Code = models.TextField(null=True, blank=True, verbose_name='Transaction_Code', db_column='Transaction_Code')
+    Program = models.TextField(null=True, blank=True, verbose_name='Program', db_column='Program')
+    Audit_Log_Msg_Text = models.TextField(null=True, blank=True, verbose_name='Audit_Log_Msg_Text', db_column='Audit_Log_Msg_Text')
+    Reference_to_Long_Version_of_a_Text = models.TextField(null=True, blank=True, verbose_name='Reference_to_Long_Version_of_a_Text', db_column='Reference_to_Long_Version_of_a_Text')
+    SAP_process = models.TextField(null=True, blank=True, verbose_name='SAP_process', db_column='SAP_process')
+    Work_Process_Number = models.TextField(null=True, blank=True, verbose_name='Work_Process_Number', db_column='Work_Process_Number')
+    Variable_Message_Data = models.TextField(null=True, blank=True, verbose_name='Variable_Message_Data', db_column='Variable_Message_Data')
+    loader_instance = models.IntegerField(null=True, blank=True)
+    json_data = models.JSONField(null=True, blank=True)
+    hash_data = models.TextField(null=True, blank=True)
+
+    date_fields_to_convert = ['Creation_Date']
+    integer_fields = []
+    float_fields = []
+    encrypted_fields = []
+    unix_dates = []
+    ad_unix_dates = []
+
+
+class PrivilegedusersVsUserLogs(models.Model):
+    ID = models.AutoField(primary_key=True)
+    User_Name = models.TextField(null=True, blank=True)
+    Full_Name = models.TextField(null=True, blank=True)
+    User_group = models.TextField(null=True, blank=True)
+    Locked = models.TextField(null=True, blank=True)
+    Reason_for_User_Lock = models.TextField(null=True, blank=True)
+    Valid_From = models.BigIntegerField(null=True, blank=True)
+    Valid_To = models.BigIntegerField(null=True, blank=True)
+    User_Type = models.TextField(null=True, blank=True)
+    Department = models.TextField(null=True, blank=True)
+    d_Creation_Date = models.BigIntegerField(null=True, blank=True)
+    d_Creation_time_of_audit_entry = models.TextField(null=True, blank=True)
+    d_Client = models.TextField(null=True, blank=True)
+    d_User_Name = models.TextField(null=True, blank=True)
+    d_Terminal_name = models.TextField(null=True, blank=True)
+    d_Transaction_Code = models.TextField(null=True, blank=True)
+    d_Program = models.TextField(null=True, blank=True)
+    d_Audit_Log_Msg_Text = models.TextField(null=True, blank=True)
+    d_Reference_to_Long_Version_of_a_Text = models.TextField(null=True, blank=True)
+    d_SAP_process = models.TextField(null=True, blank=True)
+    d_Work_Process_Number = models.TextField(null=True, blank=True)
+    d_Variable_Message_Data = models.TextField(null=True, blank=True)
+
+    both = models.IntegerField(null=True, blank=True)
+    base = models.IntegerField(null=True, blank=True)
+    delta = models.IntegerField(null=True, blank=True)
+
+    loader_instance = models.IntegerField(null=True, blank=True)
+    json_data = models.JSONField(null=True, blank=True)
+    hash_data = models.TextField(null=True, blank=True)
+
+    join_model_instance = 3  # Do not change this value
+    date_fields_to_convert = ['Valid_To', 'd_Creation_Date', 'Valid_From']
+    integer_fields = []
+    float_fields = []
+    encrypted_fields = []
+    unix_dates = []
+    ad_unix_dates = []
