@@ -866,7 +866,9 @@ def get_original_field_name(join_field_name):
 
     return field_name
 
-def load_data_to_join_model(request, model_name, pk):
+# Old
+
+def load_data_to_join_model2(request, model_name, pk):
     if request.method != 'POST':
         return redirect(request.META.get('HTTP_REFERER'))
 
@@ -1235,6 +1237,29 @@ def load_data_to_join_model(request, model_name, pk):
 
     return redirect(request.META.get('HTTP_REFERER'))
 
+
+# New
+
+from home.tasks import async_load_data_to_join_model
+
+def load_data_to_join_model(request, model_name, pk):
+
+    if request.method != 'POST':
+        return redirect(request.META.get('HTTP_REFERER'))
+
+    params = request.POST.dict()
+    params["fields_to_pass"] = request.POST.getlist("fields_to_pass")
+
+    task = async_load_data_to_join_model.delay(
+        model_name=model_name,
+        pk=pk,
+        params=params
+    )
+
+    messages.success(request, f"Join operation started (Task ID: {task.id})")
+    return redirect(request.META.get('HTTP_REFERER'))
+
+########
 
 def join_view_404(request):
     return render(request, 'pages/join_view_404.html')
