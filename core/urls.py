@@ -79,6 +79,8 @@ urlpatterns = [
     path('tables/', include('apps.tables.analysis_of_security_audits_user_logs.analysis_of_security_audits_user_logs_urls')),
 
     path('tables/', include('apps.tables.privileged_users_vs_user_logs.privileged_users_vs_user_logs_urls')),
+
+    path('tables/', include('apps.tables.user_logs_vs_privileged_users.user_logs_vs_privileged_users_urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL      , document_root=settings.MEDIA_ROOT     )

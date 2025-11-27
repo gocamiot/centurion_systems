@@ -25,6 +25,7 @@ User = get_user_model()
 
 
 class ModelChoices(models.TextChoices): 
+    USER_LOGS_VS_PRIVILEGEDUSERS = 'USER_LOGS_VS_PRIVILEGEDUSERS', 'UserLogsVsPrivilegedusers'
     PRIVILEGEDUSERS_VS_USER_LOGS = 'PRIVILEGEDUSERS_VS_USER_LOGS', 'PrivilegedusersVsUserLogs'
     ANALYSISOF_SECURITY_AUDITS_USER_LOGS = 'ANALYSISOF_SECURITY_AUDITS_USER_LOGS', 'AnalysisofSecurityAuditsUserLogs'
     PRIVILEGEDUSERS = 'PRIVILEGEDUSERS', 'Privilegedusers'
@@ -1134,6 +1135,47 @@ class PrivilegedusersVsUserLogs(models.Model):
 
     join_model_instance = 3  # Do not change this value
     date_fields_to_convert = ['Valid_To', 'd_Creation_Date', 'Valid_From']
+    integer_fields = []
+    float_fields = []
+    encrypted_fields = []
+    unix_dates = []
+    ad_unix_dates = []
+
+
+class UserLogsVsPrivilegedusers(models.Model):
+    ID = models.AutoField(primary_key=True)
+    Creation_Date = models.BigIntegerField(null=True, blank=True)
+    Creation_time_of_audit_entry = models.TextField(null=True, blank=True)
+    Client = models.TextField(null=True, blank=True)
+    User_Name = models.TextField(null=True, blank=True)
+    Terminal_name = models.TextField(null=True, blank=True)
+    Transaction_Code = models.TextField(null=True, blank=True)
+    Program = models.TextField(null=True, blank=True)
+    Audit_Log_Msg_Text = models.TextField(null=True, blank=True)
+    Reference_to_Long_Version_of_a_Text = models.TextField(null=True, blank=True)
+    SAP_process = models.TextField(null=True, blank=True)
+    Work_Process_Number = models.TextField(null=True, blank=True)
+    Variable_Message_Data = models.TextField(null=True, blank=True)
+    d_User_Name = models.TextField(null=True, blank=True)
+    d_Full_Name = models.TextField(null=True, blank=True)
+    d_User_group = models.TextField(null=True, blank=True)
+    d_Locked = models.TextField(null=True, blank=True)
+    d_Reason_for_User_Lock = models.TextField(null=True, blank=True)
+    d_Valid_From = models.BigIntegerField(null=True, blank=True)
+    d_Valid_To = models.BigIntegerField(null=True, blank=True)
+    d_User_Type = models.TextField(null=True, blank=True)
+    d_Department = models.TextField(null=True, blank=True)
+
+    both = models.IntegerField(null=True, blank=True)
+    base = models.IntegerField(null=True, blank=True)
+    delta = models.IntegerField(null=True, blank=True)
+
+    loader_instance = models.IntegerField(null=True, blank=True)
+    json_data = models.JSONField(null=True, blank=True)
+    hash_data = models.TextField(null=True, blank=True)
+
+    join_model_instance = 4  # Do not change this value
+    date_fields_to_convert = ['d_Valid_To', 'Creation_Date', 'd_Valid_From']
     integer_fields = []
     float_fields = []
     encrypted_fields = []
